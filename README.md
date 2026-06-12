@@ -1,0 +1,2 @@
+# EcoStay-An-AI-Powered-Guest-Review-Analysis-and-Direct-Booking-System
+EcoStay is a TBI GEU Summer Internship 2026 project in domain of AI-Assisted Full Stack Web Development. It is an AI-powered homestay management system for Trishul Eco-Homestays enabling direct bookings and AI-based sentiment review analysis using Gemini API to classify guest feedback, extract themes, and generate response suggestions. 
