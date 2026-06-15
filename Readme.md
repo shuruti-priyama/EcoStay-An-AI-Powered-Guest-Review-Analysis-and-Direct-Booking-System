@@ -62,52 +62,8 @@ Batch review analysis
     -Backend: Render
     -Database: MongoDB Atlas Cloud
 
-📂 Project Structure(Till Week 2)
 
-ecostay/
-│
-├── backend/
-│
-├── frontend/
-│   ├── public/
-│   │   ├── favicon.svg
-│   │   └── icons.svg
-│   │
-│   ├── src/
-│   │   ├── assets/
-│   │   │   ├── hero.png
-│   │   │   ├── react.svg
-│   │   │
-│   │   ├── components/
-│   │   │   ├── Card.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   ├── Hero.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   └── SearchBar.jsx
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── About.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Home.jsx
-│   │   │   ├── Login.jsx
-│   │   │   └── Rooms.jsx
-│   │   │
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   │
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── postcss.config.js
-│   ├── vite.config.js
-│
-├── .gitignore
-└── README.md
-
-
-🏗️ System Architecture(For eg:- Guest dashboard)
+🏗️ System Architecture(For eg:- Owner dashboard)
 
                     ┌─────────────────┐
                     │     Guest       │
