@@ -97,11 +97,24 @@ export default function About() {
           <p className="text-forest-800/70 leading-relaxed max-w-2xl mb-3">
             EcoStay is a modern homestay management platform designed to connect travelers
             with unique accommodation experiences while helping homestay owners manage their
-            properties more effectively.
+            properties more effectively.By enabling direct bookings and reducing reliance
+            on third-party travel platforms, EcoStay creates a seamless experience for both
+            guests and hosts.
+
+            The platform combines smart booking management, AI-powered review analysis, and
+            data-driven recommendations to help property owners understand guest feedback,
+            improve service quality, and build lasting relationships with travelers.
+            Whether it's discovering a peaceful mountain retreat, an eco-friendly homestay,
+            or an authentic local experience, EcoStay makes it easier for travelers to find
+            stays that feel personal and memorable.
+
           </p>
           <p className="text-forest-800/70 leading-relaxed max-w-2xl">
             The platform enables direct bookings, reducing dependency on third-party travel
             websites and creating stronger relationships between guests and property owners.
+            More than just a booking platform, EcoStay is committed to supporting
+            sustainable tourism, empowering local hospitality businesses, and creating
+            meaningful travel experiences that benefit both communities and visitors.
           </p>
         </section>
 
@@ -127,15 +140,19 @@ export default function About() {
             <div className="bg-white border border-forest-100 rounded-xl p-6">
               <h3 className="font-semibold text-forest-900 text-lg mb-2">Mission</h3>
               <p className="text-forest-800/70 text-sm leading-relaxed">
-                To empower homestay owners with innovative digital tools that simplify booking
-                management and improve guest experiences.
+                Our mission is to simplify homestay management through technology,enabling property owners to receive direct bookings, 
+                understand guest feedback through AI-powered insights, and deliver exceptional hospitality experiences. 
+                We strive to create a transparent ecosystem that benefits both travelers and hosts.
+
               </p>
             </div>
             <div className="bg-white border border-forest-100 rounded-xl p-6">
               <h3 className="font-semibold text-forest-900 text-lg mb-2">Vision</h3>
               <p className="text-forest-800/70 text-sm leading-relaxed">
-                To become a trusted platform connecting travelers with authentic homestay
-                experiences while supporting local hospitality businesses.
+                We envision a future where sustainable tourism and authentic local stays are accessible to everyone. 
+                By connecting travelers with unique homestays and empowering hosts with smart digital solutions, 
+                EcoStay aims to become a trusted platform for meaningful and responsible travel experiences.
+
               </p>
             </div>
           </div>
