@@ -24,35 +24,34 @@ const rooms = [
     primaryAction: 'Book now',
   },
   {
-    badge: 'Booked',
+    badge: 'Available',
     icon: '⛰️',
     title: 'Mountain View',
     meta: '👥 2 guests · 🛏 Queen bed',
     price: '₹2,900 / night',
     secondaryAction: 'Details',
-    primaryAction: 'Unavailable',
-    disabled: true,
+    primaryAction: 'Book now',
   },
 ]
 
 const features = [
   {
     icon: '🌿',
-    title: 'Eco-certified stay',
+    title: 'Eco-friendly stay',
     description:
-      'Solar-powered, zero-plastic, composting kitchen — the forest stays clean.',
+      'Experience sustainable living with nature-inspired accommodations designed to minimize environmental impact.',
   },
   {
     icon: '✨',
     title: 'AI review insights',
     description:
-      'Our AI reads every review so owners respond faster and guests feel heard.',
+      'Our AI API reads every review so owners respond faster and guests feel heard.',
   },
   {
     icon: '🔒',
-    title: 'Direct, secure booking',
+    title: 'Commission-Free Reservations',
     description:
-      'No middleman. Pay the homestay directly and keep more in your pocket.',
+      'Connect directly with travelers, manage reservations seamlessly, and maximize earnings without third-party commissions.',
   },
 ]
 
@@ -64,13 +63,12 @@ export default function Home() {
 
       <main className="flex-1">
         <Hero
-          eyebrow="Direct Booking · No OTA Fees"
-          title="Wake up to the"
-          highlight="mountains, not a booking fee"
-          description="Book directly with Trishul Eco-Homestays and save up to 18% vs third-party sites. Nestled in the Himalayan foothills."
+          eyebrow="Direct Booking · Authentic Himalayan Stay"
+          title="Escape the noise,"
+          highlight="embrace the mountains"
+          description="Experience the warmth of Trishul Eco-Homestays, surrounded by breathtaking Himalayan landscapes, fresh mountain air, and unforgettable hospitality."
           primaryAction="Check availability"
           secondaryAction="Learn more"
-          rating={{ score: '4.8 / 5 rating', label: '54 verified reviews' }}
         />
 
         <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
