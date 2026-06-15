@@ -3,7 +3,9 @@
 EcoStay is an AI-powered homestay management platform developed for Trishul Eco-Homestays. The platform combines a direct booking system with AI-powered guest review analysis to help homestay owners manage bookings efficiently, improve guest satisfaction, and reduce dependency on Online Travel Agencies (OTAs).
 
 🚀 Key Features
+
 🏡 Guest Dashboard
+
 Guests can:
 1. Register and Login securely
 2. Browse available homestays and rooms
@@ -14,6 +16,7 @@ Guests can:
 7. Submit reviews and ratings after stay
 
 🏨 Owner Dashboard
+
 Homestay Owners can:
 1. Manage room listings
 2. Add, update, or remove rooms
@@ -24,43 +27,49 @@ Homestay Owners can:
 7. Generate AI-powered response suggestions
 
 🤖 AI Review Analysis
+
 Sentiment Classification
 1. Positive
 2. Neutral
 3. Negative
 
-Theme Extraction
-- Food ,Cleanliness ,Location ,Value ,Experience
+Theme Extraction = 
+Food ,Cleanliness ,Location ,Value ,Experience
 
 AI-generated response suggestions
 Batch review analysis
 
 
 🛠️ Tech Stack
-1. Frontend
-    -React.js + Vite
-    -Tailwind CSS
-    -React Router DOM
+1. Frontend :
 
-2. Backend
-    -Node.js
-    -Express.js
+React.js + Vite,
+Tailwind CSS,
+React Router DOM
 
-3. Database
-    -MongoDB Atlas
+3. Backend :
 
-4. Authentication & Security
-    -JWT Authentication
-    -Password Hashing (bcrypt)
-    -Role-Based Access Control (RBAC)
+Node.js,
+Express.js
 
-5. AI Integration
-    I will decide which ai api to use when i will build ai review sentiment analysis module in later weeks of my internship.
+5. Database :
 
-6. Deployment
-    -Frontend: Vercel
-    -Backend: Render
-    -Database: MongoDB Atlas Cloud
+MongoDB Atlas
+
+6. Authentication & Security:
+
+JWT Authentication,
+Password Hashing (bcrypt),
+Role-Based Access Control (RBAC)
+
+7. AI Integration:
+I will decide which ai api to use when i will build ai review sentiment analysis module in later weeks of my internship.
+
+8. Deployment:
+
+Frontend: Vercel,
+Backend: Render,
+Database: MongoDB Atlas Cloud
 
 
 🏗️ System Architecture(For eg:- Owner dashboard)
