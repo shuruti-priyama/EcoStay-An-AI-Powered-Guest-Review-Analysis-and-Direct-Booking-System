@@ -4,17 +4,22 @@ import About from './pages/About'
 import Login from './pages/Login'
 import Rooms from './pages/Rooms'
 import Dashboard from './pages/Dashboard'
+import Showcase from './pages/Showcase'
+import { ToastProvider } from './components/ui'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <ToastProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/showcase" element={<Showcase />} />
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   )
 }

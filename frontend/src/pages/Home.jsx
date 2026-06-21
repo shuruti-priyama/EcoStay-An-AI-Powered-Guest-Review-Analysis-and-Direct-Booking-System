@@ -57,7 +57,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-cream">
+    <div className="min-h-screen flex flex-col bg-cream dark:bg-forest-950">
       <Navbar />
       <SearchBar />
 
@@ -73,8 +73,8 @@ export default function Home() {
 
         <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-forest-900">Available rooms</h2>
-            <a href="#" className="text-forest-600 text-sm font-medium hover:underline">
+            <h2 className="text-xl font-semibold text-forest-900 dark:text-forest-50">Available rooms</h2>
+            <a href="#" className="text-forest-600 dark:text-forest-300 text-sm font-medium hover:underline">
               View all →
             </a>
           </div>
@@ -91,13 +91,13 @@ export default function Home() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="bg-white border border-forest-100 rounded-xl p-5"
+                className="bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-700 rounded-xl p-5"
               >
-                <div className="bg-forest-50 w-10 h-10 rounded-lg flex items-center justify-center text-lg mb-3">
+                <div className="bg-forest-50 dark:bg-forest-900 w-10 h-10 rounded-lg flex items-center justify-center text-lg mb-3">
                   {f.icon}
                 </div>
-                <h3 className="font-semibold text-forest-900 mb-1">{f.title}</h3>
-                <p className="text-forest-800/60 text-sm leading-relaxed">
+                <h3 className="font-semibold text-forest-900 dark:text-forest-50 mb-1">{f.title}</h3>
+                <p className="text-forest-800/60 dark:text-forest-100/60 text-sm leading-relaxed">
                   {f.description}
                 </p>
               </div>

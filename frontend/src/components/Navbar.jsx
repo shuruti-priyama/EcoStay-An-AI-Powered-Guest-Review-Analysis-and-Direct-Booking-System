@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Leaf } from 'lucide-react'
+import ThemeToggle from './ThemeToggle'
 
 export default function Navbar() {
   const navLinks = [
@@ -9,7 +10,7 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="bg-forest-800 text-cream sticky top-0 z-50">
+    <header className="bg-forest-800 dark:bg-forest-900 text-cream sticky top-0 z-50">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
         <Link to="/" className="flex items-center gap-2 font-semibold">
           <span className="bg-forest-600 rounded-md p-1.5 flex items-center justify-center">
@@ -39,12 +40,15 @@ export default function Navbar() {
           ))}
         </div>
 
-        <Link
-          to="/login"
-          className="bg-white text-forest-800 text-sm font-semibold px-4 py-2 rounded-md hover:bg-forest-50 transition-colors"
-        >
-          Log in
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            to="/login"
+            className="bg-white text-forest-800 text-sm font-semibold px-4 py-2 rounded-md hover:bg-forest-50 transition-colors"
+          >
+            Log in
+          </Link>
+        </div>
       </nav>
 
       {/* Mobile nav links */}

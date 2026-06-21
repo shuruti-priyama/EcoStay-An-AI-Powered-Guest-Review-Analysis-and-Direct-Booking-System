@@ -13,8 +13,7 @@ export default function Footer() {
             EcoStay
           </div>
           <p className="text-forest-100/60 leading-relaxed">
-            AI-powered homestay management for Trishul Eco-Homestays, Uttarakhand. TBI GEU Summer
-            Internship 2026.
+            AI-powered homestay management for Trishul Eco-Homestays, Uttarakhand.
           </p>
         </div>
 
@@ -27,6 +26,7 @@ export default function Footer() {
             <li><Link to="/about" className="hover:text-white">About</Link></li>
             <li><Link to="/rooms" className="hover:text-white">Rooms</Link></li>
             <li><Link to="/login" className="hover:text-white">Book a stay</Link></li>
+            <li><Link to="/showcase" className="hover:text-white">Component Showcase</Link></li>
           </ul>
         </div>
 

@@ -57,7 +57,7 @@ export default function About() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream">
+    <div className="min-h-screen flex flex-col bg-cream dark:bg-forest-950">
       <Navbar />
 
       <main className="flex-1 w-full">
@@ -66,7 +66,7 @@ export default function About() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 text-center">
             <h1 className="text-3xl sm:text-5xl font-bold mb-3">EcoStay</h1>
             <p className="text-forest-100/80 text-base sm:text-xl max-w-2xl mx-auto mb-2">
-              AI-Powered Direct Booking Platform for Homestays
+              Direct Booking Platform for Homestays
             </p>
             <p className="text-forest-100/60 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
               Helping homestay owners manage bookings efficiently while providing guests with
@@ -91,10 +91,10 @@ export default function About() {
           <p className="text-forest-600 font-semibold text-xs tracking-widest uppercase mb-3">
             Our Story
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 mb-4 max-w-2xl">
+          <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 dark:text-forest-50 mb-4 max-w-2xl">
             About EcoStay
           </h2>
-          <p className="text-forest-800/70 leading-relaxed max-w-2xl mb-3">
+          <p className="text-forest-800/70 dark:text-forest-100/70 leading-relaxed max-w-2xl mb-3">
             EcoStay is a modern homestay management platform designed to connect travelers
             with unique accommodation experiences while helping homestay owners manage their
             properties more effectively.By enabling direct bookings and reducing reliance
@@ -109,7 +109,7 @@ export default function About() {
             stays that feel personal and memorable.
 
           </p>
-          <p className="text-forest-800/70 leading-relaxed max-w-2xl">
+          <p className="text-forest-800/70 dark:text-forest-100/70 leading-relaxed max-w-2xl">
             The platform enables direct bookings, reducing dependency on third-party travel
             websites and creating stronger relationships between guests and property owners.
             More than just a booking platform, EcoStay is committed to supporting
@@ -120,15 +120,15 @@ export default function About() {
 
         {/* What We Do */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 mb-6">What We Do</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 dark:text-forest-50 mb-6">What We Do</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {whatWeDo.map((item) => (
-              <div key={item.title} className="bg-white border border-forest-100 rounded-xl p-5">
-                <div className="bg-forest-50 w-10 h-10 rounded-lg flex items-center justify-center text-lg mb-3">
+              <div key={item.title} className="bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-700 rounded-xl p-5">
+                <div className="bg-forest-50 dark:bg-forest-900 w-10 h-10 rounded-lg flex items-center justify-center text-lg mb-3">
                   {item.icon}
                 </div>
-                <h3 className="font-semibold text-forest-900 mb-1">{item.title}</h3>
-                <p className="text-forest-800/60 text-sm leading-relaxed">{item.description}</p>
+                <h3 className="font-semibold text-forest-900 dark:text-forest-50 mb-1">{item.title}</h3>
+                <p className="text-forest-800/60 dark:text-forest-100/60 text-sm leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -137,43 +137,39 @@ export default function About() {
         {/* Mission & Vision */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="bg-white border border-forest-100 rounded-xl p-6">
-              <h3 className="font-semibold text-forest-900 text-lg mb-2">Mission</h3>
-              <p className="text-forest-800/70 text-sm leading-relaxed">
-                Our mission is to simplify homestay management through technology,enabling property owners to receive direct bookings, 
-                understand guest feedback through AI-powered insights, and deliver exceptional hospitality experiences. 
-                We strive to create a transparent ecosystem that benefits both travelers and hosts.
-
+            <div className="bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-700 rounded-xl p-6">
+              <h3 className="font-semibold text-forest-900 dark:text-forest-50 text-lg mb-2">Mission</h3>
+              <p className="text-forest-800/70 dark:text-forest-100/70 text-sm leading-relaxed">
+                To empower homestay owners with innovative digital tools that simplify booking
+                management and improve guest experiences.
               </p>
             </div>
-            <div className="bg-white border border-forest-100 rounded-xl p-6">
-              <h3 className="font-semibold text-forest-900 text-lg mb-2">Vision</h3>
-              <p className="text-forest-800/70 text-sm leading-relaxed">
-                We envision a future where sustainable tourism and authentic local stays are accessible to everyone. 
-                By connecting travelers with unique homestays and empowering hosts with smart digital solutions, 
-                EcoStay aims to become a trusted platform for meaningful and responsible travel experiences.
-
+            <div className="bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-700 rounded-xl p-6">
+              <h3 className="font-semibold text-forest-900 dark:text-forest-50 text-lg mb-2">Vision</h3>
+              <p className="text-forest-800/70 dark:text-forest-100/70 text-sm leading-relaxed">
+                To become a trusted platform connecting travelers with authentic homestay
+                experiences while supporting local hospitality businesses.
               </p>
             </div>
           </div>
         </section>
 
         {/* Platform Modules */}
-        <section className="bg-forest-50">
+        <section className="bg-forest-50 dark:bg-forest-900">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-forest-900 dark:text-forest-50 mb-6">
               Platform Modules
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {modules.map((m) => (
-                <div key={m.title} className="bg-white border border-forest-100 rounded-xl p-6">
+                <div key={m.title} className="bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-700 rounded-xl p-6">
                   <div className="bg-forest-100 w-12 h-12 rounded-lg flex items-center justify-center text-2xl mb-4">
                     {m.icon}
                   </div>
-                  <h3 className="font-semibold text-forest-900 text-lg mb-3">{m.title}</h3>
+                  <h3 className="font-semibold text-forest-900 dark:text-forest-50 text-lg mb-3">{m.title}</h3>
                   <ul className="space-y-2">
                     {m.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-forest-800/70 text-sm">
+                      <li key={item} className="flex items-start gap-2 text-forest-800/70 dark:text-forest-100/70 text-sm">
                         <span className="text-forest-500 mt-0.5">•</span>
                         {item}
                       </li>

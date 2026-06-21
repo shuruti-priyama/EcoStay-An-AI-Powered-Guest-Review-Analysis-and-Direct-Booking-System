@@ -15,11 +15,11 @@ export default function Hero({
             {eyebrow}
           </p>
         )}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-forest-900 leading-tight mb-4">
-          {title} {highlight && <span className="text-forest-500">{highlight}</span>}
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-forest-900 dark:text-forest-50 leading-tight mb-4">
+          {title} {highlight && <span className="text-forest-500 dark:text-forest-300">{highlight}</span>}
         </h1>
         {description && (
-          <p className="text-forest-800/70 text-base sm:text-lg leading-relaxed mb-6 max-w-xl">
+          <p className="text-forest-800/70 dark:text-forest-100/70 text-base sm:text-lg leading-relaxed mb-6 max-w-xl">
             {description}
           </p>
         )}
@@ -27,12 +27,12 @@ export default function Hero({
         {(primaryAction || secondaryAction) && (
           <div className="flex flex-wrap gap-3">
             {primaryAction && (
-              <button className="bg-forest-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-forest-800 transition-colors">
+              <button className="bg-forest-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-forest-800 dark:bg-forest-600 dark:hover:bg-forest-500 transition-colors">
                 {primaryAction}
               </button>
             )}
             {secondaryAction && (
-              <button className="bg-white border border-forest-200 text-forest-800 font-semibold px-5 py-3 rounded-lg hover:bg-forest-50 transition-colors">
+              <button className="bg-white dark:bg-forest-800 border border-forest-200 dark:border-forest-600 text-forest-800 dark:text-forest-100 font-semibold px-5 py-3 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-700 transition-colors">
                 {secondaryAction}
               </button>
             )}
@@ -41,10 +41,10 @@ export default function Hero({
       </div>
 
       <div className="relative">
-        <div className="bg-forest-100 rounded-2xl aspect-[4/3] flex items-center justify-center">
+        <div className="bg-forest-100 dark:bg-forest-800 rounded-2xl aspect-[4/3] flex items-center justify-center">
           <svg
             viewBox="0 0 100 100"
-            className="w-24 sm:w-32 text-forest-300"
+            className="w-24 sm:w-32 text-forest-300 dark:text-forest-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="3"
@@ -54,11 +54,11 @@ export default function Hero({
         </div>
 
         {rating && (
-          <div className="absolute -bottom-4 left-4 sm:-left-6 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3">
-            <span className="text-forest-500 text-lg">★</span>
+          <div className="absolute -bottom-4 left-4 sm:-left-6 bg-white dark:bg-forest-800 rounded-xl shadow-lg px-4 py-3 flex items-center gap-3">
+            <span className="text-forest-500 dark:text-forest-300 text-lg">★</span>
             <div>
-              <p className="font-semibold text-forest-900 text-sm">{rating.score}</p>
-              <p className="text-forest-800/60 text-xs">{rating.label}</p>
+              <p className="font-semibold text-forest-900 dark:text-forest-50 text-sm">{rating.score}</p>
+              <p className="text-forest-800/60 dark:text-forest-100/60 text-xs">{rating.label}</p>
             </div>
           </div>
         )}
