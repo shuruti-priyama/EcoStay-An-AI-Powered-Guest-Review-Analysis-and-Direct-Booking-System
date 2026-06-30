@@ -52,6 +52,46 @@ React Router DOM
 Node.js,
 Express.js
 
+## Backend Setup
+
+Navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+If required, create a `.env` file and add the necessary environment variables.
+
+Example:
+
+```env
+PORT=5000
+NODE_ENV=development
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+npm start
+```
+
+The backend server will run on:
+
+```
+http://localhost:5000
+```
 
 5. Database :
 
