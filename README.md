@@ -135,7 +135,7 @@ Tests spin up an in-memory MongoDB instance (`mongodb-memory-server`), so no rea
 
 | Method | Endpoint                     | Access        | Description |
 |--------|-------------------------------|---------------|--------------|
-| POST   | /api/auth/register            | Public        | Register a guest account |
+| POST   | /api/auth/register            | Public        | Register a guest account(not working till week 5) |
 | POST   | /api/auth/login               | Public        | Log in, returns JWT |
 | GET    | /api/auth/me                  | Private       | Current user's profile |
 | GET    | /api/rooms                    | Public        | List rooms (supports `?checkIn&checkOut&guests`) |
