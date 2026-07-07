@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply transition-colors duration-200;
+  }
+  ::selection {
+    @apply bg-clay-200 text-forest-800;
+  }
+  *:focus-visible {
+    @apply outline-none ring-2 ring-clay-400 ring-offset-2 ring-offset-sand-50 dark:ring-offset-forest-950;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest-700 px-6 py-3 font-body font-semibold text-sand-50 transition-colors hover:bg-forest-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-forest-600 dark:hover:bg-forest-500;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-clay-500 px-6 py-3 font-body font-semibold text-sand-50 transition-colors hover:bg-clay-600 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-forest-700 px-6 py-3 font-body font-semibold text-forest-700 transition-colors hover:bg-forest-700 hover:text-sand-50 dark:border-sand-100 dark:text-sand-100 dark:hover:bg-sand-100 dark:hover:text-forest-900;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-forest-200 bg-white px-4 py-3 font-body text-ink placeholder:text-ink/40 focus:border-clay-400 focus:outline-none focus:ring-2 focus:ring-clay-200 dark:border-forest-700 dark:bg-forest-900 dark:text-sand-100 dark:placeholder:text-sand-100/40 dark:focus:ring-clay-500/40;
+  }
+  .card {
+    @apply rounded-2xl bg-white shadow-card dark:bg-forest-800 dark:shadow-none;
+  }
+  .theme-toggle {
+    @apply relative inline-flex h-8 w-14 shrink-0 items-center rounded-full border border-forest-200 bg-forest-50 transition-colors dark:border-forest-600 dark:bg-forest-800;
+  }
+  .theme-toggle-thumb {
+    @apply inline-flex h-6 w-6 translate-x-1 items-center justify-center rounded-full bg-white text-clay-500 shadow transition-transform duration-200 dark:translate-x-7 dark:bg-forest-900 dark:text-sand-100;
+  }
+}
