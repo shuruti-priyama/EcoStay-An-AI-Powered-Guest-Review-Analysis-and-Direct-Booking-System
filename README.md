@@ -1,6 +1,6 @@
 # EcoStay — An-AI-Powered-Guest-Review-Analysis-and-Direct-Booking-System
 
-A full-stack, role-based homestay management web app built with the **MERN stack** (MongoDB, Express, React, Node.js) and **Tailwind CSS**. Guests can browse rooms, check live availability, and request bookings. Admins get a dashboard to manage rooms, approve/reject bookings, and view analytics.
+A full-stack, role-based homestay management web app built with the **MERN stack** (MongoDB, Express, React, Node.js) and **Tailwind CSS**. Guests can browse rooms, check live availability, and request bookings. Admins get a dashboard to manage rooms, approve/reject bookings, use ai for guest reviews analysis view analytics.
 
 ---
 
