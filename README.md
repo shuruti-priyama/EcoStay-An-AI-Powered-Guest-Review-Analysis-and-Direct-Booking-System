@@ -28,6 +28,8 @@ ecostay/
 │   └── server.js                 # App entrypoint
 └── frontend/
     └── src/
+         assets/
+        └── W5_SchemaDiagram_[TBI-26100924].png
         ├── api/axios.js          # Axios instance with JWT interceptor
         ├── context/AuthContext.jsx
         ├── components/           # Navbar, Footer, HeroSection, RoomCard,
@@ -58,6 +60,35 @@ npm run dev                 # starts API on http://localhost:5000
 2. In Atlas, go to **Database Access** and confirm the database user has **Read and write to any database** (or scoped to `ecostayproject`).
 3. Copy the connection string from **Database → Connect → Drivers → Node.js**, and put it in `backend/.env` as `MONGO_URI` (see `.env.example` for the shape). `DATABASE_URL` works too if that's the name your host expects — `config/db.js` checks both.
 4. `.env` is already listed in `.gitignore` — it will never be committed. Never paste a real connection string into a chat, issue tracker, or public repo; if one is ever exposed, rotate the database user's password immediately from **Database Access → Edit User**.
+
+## 4. Database Schema
+
+![Database Schema](./frontend/src/assets/W5_SchemaDiagram_[TBI-26100924].png)
+
+---
+
+## Why MongoDB Atlas?
+
+This project uses **MongoDB Atlas** as the cloud-hosted database solution for storing user accounts, room details, booking records, and application analytics.
+
+### Reasons for Choosing MongoDB Atlas
+
+- **Cloud-hosted database** – Eliminates the need to install and manage a local MongoDB server.
+- **Easy MERN integration** – Connects seamlessly with **Node.js**, **Express.js**, and **Mongoose**.
+- **Scalable architecture** – Supports application growth by allowing database resources to scale as needed.
+- **Secure by design** – Provides IP access control, database user authentication, and encrypted connections (TLS/SSL).
+- **Reliable and highly available** – Offers automated backups, monitoring, and managed infrastructure.
+- **Free development tier** – The free cluster is ideal for development, testing, and academic projects.
+
+### Benefits in EcoStay
+
+MongoDB Atlas enables EcoStay to:
+- Store and manage users, rooms, and booking information in a centralized cloud database.
+- Perform efficient CRUD operations through the Express.js backend using Mongoose.
+- Access the database securely from different development environments.
+- Provide a production-ready database foundation for future deployment and scaling.
+
+---
 
 Demo accounts created by the seed script:
 - **Admin:** `admin@ecostay.com` / `Admin@123`
