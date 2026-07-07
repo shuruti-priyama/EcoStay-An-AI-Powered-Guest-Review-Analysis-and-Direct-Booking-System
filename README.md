@@ -10,7 +10,6 @@ A full-stack, role-based homestay management web app built with the **MERN stack
 |------------|------|
 | Frontend   | React 18 (Vite), React Router v6, Tailwind CSS, Axios, react-hot-toast, lucide-react |
 | Backend    | Node.js, Express.js, MongoDB + Mongoose, JWT auth, bcryptjs |
-| Testing    | Jest + Supertest + mongodb-memory-server (backend API tests) |
 | Auth       | JWT stored in `localStorage`, role-based route guards on both client and server |
 
 ## 2. Project Structure
@@ -156,6 +155,6 @@ Tests spin up an in-memory MongoDB instance (`mongodb-memory-server`), so no rea
 The visual identity leans into the "eco-homestay" brief: a forest-green and burnt-clay palette, `Fraunces` for display type (organic, warm serif) paired with `Work Sans` for body copy. The signature UI element is the lantern-style **check-in/check-out availability bar** that straddles the hero image — echoing a familiar travel-booking pattern but restyled in the site's own materials (dark forest background, gold-clay border) rather than a generic blue search bar.
 
 ## 7. Next Steps (week 6-9)
-- Wire up the AI API for guest review analysis
-- Payment integration (Razorpay/Stripe) for confirmed bookings
-- Image upload (Cloudinary/S3) instead of pasted image URLs in the admin room form
+- More advanced authentication & security (implement registeration of new users).
+- Wire up the AI API for guest review analysis.
+- Image upload (Cloudinary/S3) instead of pasted image URLs in the admin room form.
