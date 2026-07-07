@@ -63,8 +63,6 @@ npm run dev                 # starts API on http://localhost:5000
 
 ## 4. Database Schema
 
-![Database Schema](./frontend/src/assets/W5_SchemaDiagram_[TBI-26100924].png)
-
 <img width="1470" height="700" alt="W5-schemadiagram-tbi26100924" src="https://github.com/user-attachments/assets/cf3e765c-1af1-4f28-8120-964721dbaef1" />
 
 
