@@ -158,3 +158,4 @@ The visual identity leans into the "eco-homestay" brief: a forest-green and burn
 - More advanced authentication & security (implement registeration of new users).
 - Wire up the AI API for guest review analysis.
 - Image upload (Cloudinary/S3) instead of pasted image URLs in the admin room form.
+- Deployment of the application
