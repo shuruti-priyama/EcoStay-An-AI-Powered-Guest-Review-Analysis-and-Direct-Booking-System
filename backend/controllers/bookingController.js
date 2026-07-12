@@ -122,6 +122,21 @@ const getAllBookings = asyncHandler(async (req, res) => {
   res.json({ success: true, count: bookings.length, data: bookings });
 });
 
+const getOwnerBookings = asyncHandler(async (req, res) => {
+  const { status } = req.query;
+  const myRoomIds = await Room.find({ owner: req.user._id }).distinct('_id');
+
+  const filter = { room: { $in: myRoomIds } };
+  if (status) filter.status = status;
+
+  const bookings = await Booking.find(filter)
+    .populate('room', 'name images pricePerNight type')
+    .populate('guest', 'name email phone')
+    .sort({ createdAt: -1 });
+
+  res.json({ success: true, count: bookings.length, data: bookings });
+});
+
 
 const updateBookingStatus = asyncHandler(async (req, res) => {
   const { status, adminNote } = req.body;
@@ -135,6 +150,14 @@ const updateBookingStatus = asyncHandler(async (req, res) => {
   if (!booking) {
     res.status(404);
     throw new Error('Booking not found');
+  }
+
+  if (req.user.role === 'owner') {
+    const room = await Room.findById(booking.room);
+    if (!room || !room.owner || room.owner.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error('You can only manage bookings for rooms you own');
+    }
   }
 
   if (status === 'approved') {
@@ -158,5 +181,6 @@ module.exports = {
   getMyBookings,
   cancelBooking,
   getAllBookings,
+  getOwnerBookings,
   updateBookingStatus,
 };

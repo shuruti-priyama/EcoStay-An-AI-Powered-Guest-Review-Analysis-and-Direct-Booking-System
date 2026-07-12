@@ -75,9 +75,17 @@ const createRoom = asyncHandler(async (req, res) => {
     images,
     amenities,
     totalRooms,
+    
+    owner: req.user.role === 'owner' ? req.user._id : req.body.owner || null,
   });
 
   res.status(201).json({ success: true, data: room });
+});
+
+const getMyRooms = asyncHandler(async (req, res) => {
+  const filter = req.user.role === 'admin' ? {} : { owner: req.user._id };
+  const rooms = await Room.find(filter).populate('owner', 'name email').sort({ createdAt: -1 });
+  res.json({ success: true, count: rooms.length, data: rooms });
 });
 
 
@@ -87,6 +95,11 @@ const updateRoom = asyncHandler(async (req, res) => {
   if (!room) {
     res.status(404);
     throw new Error('Room not found');
+  }
+
+  if (req.user.role === 'owner' && (!room.owner || room.owner.toString() !== req.user._id.toString())) {
+    res.status(403);
+    throw new Error('You can only edit rooms you own');
   }
 
   const updatable = ['name', 'description', 'type', 'pricePerNight', 'maxGuests', 'images', 'amenities', 'totalRooms', 'isActive'];
@@ -106,6 +119,11 @@ const deleteRoom = asyncHandler(async (req, res) => {
     throw new Error('Room not found');
   }
 
+  if (req.user.role === 'owner' && (!room.owner || room.owner.toString() !== req.user._id.toString())) {
+    res.status(403);
+    throw new Error('You can only delete rooms you own');
+  }
+
   const activeBookings = await Booking.countDocuments({
     room: room._id,
     status: { $in: ['pending', 'approved'] },
@@ -120,4 +138,4 @@ const deleteRoom = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Room deleted successfully' });
 });
 
-module.exports = { getRooms, getRoomById, createRoom, updateRoom, deleteRoom };
+module.exports = { getRooms, getRoomById, createRoom, updateRoom, deleteRoom, getMyRooms };
