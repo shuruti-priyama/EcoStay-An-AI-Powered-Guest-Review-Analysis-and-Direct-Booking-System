@@ -157,9 +157,32 @@ GOOGLE_CLIENT_ID=xxxx
 GOOGLE_CLIENT_SECRET=xxxx
 ```
 
-# Database Schema
+---
 
-> Replace this placeholder with your Week 5 schema image.
+## Why MongoDB Atlas?
+
+This project uses **MongoDB Atlas** as the cloud-hosted database solution for storing user accounts, room details, booking records, and application analytics.
+
+### Reasons for Choosing MongoDB Atlas
+
+- **Cloud-hosted database** – Eliminates the need to install and manage a local MongoDB server.
+- **Easy MERN integration** – Connects seamlessly with **Node.js**, **Express.js**, and **Mongoose**.
+- **Scalable architecture** – Supports application growth by allowing database resources to scale as needed.
+- **Secure by design** – Provides IP access control, database user authentication, and encrypted connections (TLS/SSL).
+- **Reliable and highly available** – Offers automated backups, monitoring, and managed infrastructure.
+- **Free development tier** – The free cluster is ideal for development, testing, and academic projects.
+
+### Benefits in EcoStay
+
+MongoDB Atlas enables EcoStay to:
+- Store and manage users, rooms, and booking information in a centralized cloud database.
+- Perform efficient CRUD operations through the Express.js backend using Mongoose.
+- Access the database securely from different development environments.
+- Provide a production-ready database foundation for future deployment and scaling.
+
+---
+
+# Database Schema
 
 <img width="1460" height="688" alt="image" src="https://github.com/user-attachments/assets/fa635e14-d6e9-40ba-998f-5b2b4d06b70e" />
 
