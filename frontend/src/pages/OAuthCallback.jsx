@@ -1,4 +1,8 @@
-
+import React, { useEffect, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
+import Loader from '../components/Loader';
 const OAuthCallback = () => {
   const [searchParams] = useSearchParams();
   const { loginWithToken } = useAuth();
