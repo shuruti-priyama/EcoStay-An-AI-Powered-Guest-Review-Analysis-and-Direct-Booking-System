@@ -1,15 +1,17 @@
 const express = require('express');
-const { getRooms, getRoomById, createRoom, updateRoom, deleteRoom } = require('../controllers/roomController');
+const { getRooms, getRoomById, createRoom, updateRoom, deleteRoom, getMyRooms } = require('../controllers/roomController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 router.get('/', getRooms);
+
+router.get('/mine', protect, authorize('owner', 'admin'), getMyRooms);
+
 router.get('/:id', getRoomById);
 
-// Admin-only room management
-router.post('/', protect, authorize('admin'), createRoom);
-router.put('/:id', protect, authorize('admin'), updateRoom);
-router.delete('/:id', protect, authorize('admin'), deleteRoom);
+router.post('/', protect, authorize('owner', 'admin'), createRoom);
+router.put('/:id', protect, authorize('owner', 'admin'), updateRoom);
+router.delete('/:id', protect, authorize('owner', 'admin'), deleteRoom);
 
 module.exports = router;
