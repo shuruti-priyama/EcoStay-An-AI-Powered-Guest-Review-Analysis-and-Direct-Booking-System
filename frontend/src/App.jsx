@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import OAuthCallback from './pages/OAuthCallback';
 import Rooms from './pages/Rooms';
 import RoomDetails from './pages/RoomDetails';
 import BookingHistory from './pages/BookingHistory';
@@ -17,6 +18,11 @@ import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ManageRooms from './pages/admin/ManageRooms';
 import ManageBookings from './pages/admin/ManageBookings';
+
+import OwnerLayout from './pages/owner/OwnerLayout';
+import OwnerDashboard from './pages/owner/OwnerDashboard';
+import OwnerRooms from './pages/owner/OwnerRooms';
+import OwnerBookings from './pages/owner/OwnerBookings';
 
 function App() {
   return (
@@ -30,6 +36,7 @@ function App() {
           <Route path="/rooms/:id" element={<RoomDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/oauth-callback" element={<OAuthCallback />} />
 
           <Route
             path="/my-bookings"
@@ -51,6 +58,19 @@ function App() {
             <Route index element={<AdminDashboard />} />
             <Route path="rooms" element={<ManageRooms />} />
             <Route path="bookings" element={<ManageBookings />} />
+          </Route>
+
+          <Route
+            path="/owner"
+            element={
+              <ProtectedRoute role="owner">
+                <OwnerLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<OwnerDashboard />} />
+            <Route path="rooms" element={<OwnerRooms />} />
+            <Route path="bookings" element={<OwnerBookings />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
