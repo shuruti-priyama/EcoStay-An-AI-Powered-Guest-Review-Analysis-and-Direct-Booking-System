@@ -46,6 +46,12 @@ const roomSchema = new mongoose.Schema(
       min: 0,
       default: 1,
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null, 
+      index: true,
+    },
     isActive: {
       type: Boolean,
       default: true,
