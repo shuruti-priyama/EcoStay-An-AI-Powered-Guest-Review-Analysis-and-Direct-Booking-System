@@ -67,7 +67,6 @@ EcoStay is a full-stack MERN application for homestay management. Guests can reg
 | Backend | Node.js, Express.js |
 | Database | MongoDB Atlas, Mongoose |
 | Authentication | JWT, Passport Google OAuth |
-| Testing | Jest, Supertest |
 
 ---
 
@@ -119,7 +118,7 @@ ecostay/
 ## Clone
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/shuruti-priyama/EcoStay-An-AI-Powered-Guest-Review-Analysis-and-Direct-Booking-System 
 cd ecostay
 ```
 
@@ -163,7 +162,7 @@ GOOGLE_CLIENT_SECRET=xxxx
 > Replace this placeholder with your Week 5 schema image.
 
 ```md
-![Database Schema](assets/W5_SchemaDiagram.png)
+
 ```
 
 # Authentication & Security (Week 6)
@@ -248,18 +247,6 @@ Applied on:
 | PUT | /api/bookings/:id/status | Admin | Update Status |
 | GET | /api/admin/analytics | Admin | Analytics |
 
-# Screenshots
-
-Add screenshots here:
-
-- Home Page
-- Login
-- Register
-- Google OAuth
-- Rooms
-- Booking
-- Admin Dashboard
-- Analytics
 
 # Design Notes
 
@@ -268,22 +255,10 @@ Add screenshots here:
 - Reusable Components
 - Forest green branding
 
-# Week 6 Summary
-
-Successfully implemented:
-
-- Working authentication
-- JWT authorization
-- Google OAuth
-- Protected frontend pages
-- Protected backend APIs
-- Rate limiting
-- Input validation
-
-# Future Scope (Week 7–9)
+# Future Scope (upcoming weeks)
 
 - AI Review Analysis
 - Deployment
 
 ---
-Made for the Full Stack Development Internship (Weeks 2–6).
+Made for the TBI SIP AI-Assisted Full Stack Web Development Internship, GEU.
