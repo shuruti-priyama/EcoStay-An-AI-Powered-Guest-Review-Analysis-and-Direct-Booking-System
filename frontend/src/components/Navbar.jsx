@@ -27,7 +27,7 @@ const navLinkClass = ({ isActive }) =>
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { isAuthenticated, isAdmin, user, logout } = useAuth();
+  const { isAuthenticated, isAdmin, isOwner, user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -56,11 +56,14 @@ const Navbar = () => {
           <NavLink to="/rooms" className={navLinkClass}>Rooms</NavLink>
           <NavLink to="/about" className={navLinkClass}>About</NavLink>
 
-          {isAuthenticated && !isAdmin && (
+          {isAuthenticated && !isAdmin && !isOwner && (
             <NavLink to="/my-bookings" className={navLinkClass}>My Bookings</NavLink>
           )}
           {isAdmin && (
             <NavLink to="/admin" className={navLinkClass}>Dashboard</NavLink>
+          )}
+          {isOwner && (
+            <NavLink to="/owner" className={navLinkClass}>Owner Dashboard</NavLink>
           )}
 
           <ThemeToggle />
@@ -97,12 +100,17 @@ const Navbar = () => {
             <NavLink to="/rooms" className={navLinkClass} onClick={() => setOpen(false)}>Rooms</NavLink>
             <NavLink to="/about" className={navLinkClass} onClick={() => setOpen(false)}>About</NavLink>
 
-            {isAuthenticated && !isAdmin && (
+            {isAuthenticated && !isAdmin && !isOwner && (
               <NavLink to="/my-bookings" className={navLinkClass} onClick={() => setOpen(false)}>My Bookings</NavLink>
             )}
             {isAdmin && (
               <NavLink to="/admin" className={navLinkClass} onClick={() => setOpen(false)}>
                 <span className="flex items-center gap-1"><LayoutDashboard size={16}/> Dashboard</span>
+              </NavLink>
+            )}
+            {isOwner && (
+              <NavLink to="/owner" className={navLinkClass} onClick={() => setOpen(false)}>
+                <span className="flex items-center gap-1"><LayoutDashboard size={16}/> Owner Dashboard</span>
               </NavLink>
             )}
 
