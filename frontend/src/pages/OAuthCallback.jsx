@@ -31,11 +31,6 @@ const OAuthCallback = () => {
       } catch (err) {
         toast.error('Could not complete Google sign-in. Please try again.');
         navigate('/login', { replace: true });
-      }
-    })();
-  }, [searchParams, loginWithToken, navigate]);
 
-  return <Loader fullScreen label="Finishing Google sign-in..." />;
-};
 
 export default OAuthCallback;
