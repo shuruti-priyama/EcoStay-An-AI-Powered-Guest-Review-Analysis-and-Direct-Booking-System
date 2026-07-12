@@ -11,7 +11,7 @@ const emptyForm = {
 
 const ROOM_TYPES = ['Cottage', 'Treehouse', 'Mud House', 'Bamboo Villa', 'Riverside Cabin', 'Farmstay Room'];
 
-const ManageRooms = () => {
+const ManageRooms = ({ ownerMode = false }) => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +22,8 @@ const ManageRooms = () => {
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/rooms');
+      
+      const res = await api.get(ownerMode ? '/rooms/mine' : '/rooms');
       setRooms(res.data.data);
     } catch (err) {
       toast.error('Failed to load rooms');

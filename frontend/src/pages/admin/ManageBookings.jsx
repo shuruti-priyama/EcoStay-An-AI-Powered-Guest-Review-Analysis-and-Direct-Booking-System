@@ -7,7 +7,7 @@ import api from '../../api/axios';
 
 const FILTERS = ['all', 'pending', 'approved', 'rejected', 'cancelled', 'completed'];
 
-const ManageBookings = () => {
+const ManageBookings = ({ ownerMode = false }) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -17,7 +17,7 @@ const ManageBookings = () => {
     setLoading(true);
     try {
       const params = filter !== 'all' ? { status: filter } : {};
-      const res = await api.get('/bookings', { params });
+      const res = await api.get(ownerMode ? '/bookings/owner' : '/bookings', { params });
       setBookings(res.data.data);
     } catch (err) {
       toast.error('Failed to load bookings');
