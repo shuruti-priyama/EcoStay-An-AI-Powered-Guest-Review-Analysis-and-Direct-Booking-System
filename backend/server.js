@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
+const passport = require('./config/passport');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const authRoutes = require('./routes/authRoutes');
@@ -13,7 +14,7 @@ const roomRoutes = require('./routes/roomRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
-// Connect to MongoDB (skipped automatically in test env - see tests/setup.js)
+// Connect to MongoDB
 if (process.env.NODE_ENV !== 'test') {
   connectDB();
 }
@@ -31,12 +32,12 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(passport.initialize()); 
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'EcoStay API is running', timestamp: new Date().toISOString() });
 });
@@ -47,7 +48,6 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
 
-// 404 + error handlers (must be last)
 app.use(notFound);
 app.use(errorHandler);
 
