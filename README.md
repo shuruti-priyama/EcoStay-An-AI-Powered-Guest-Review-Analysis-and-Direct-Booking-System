@@ -161,9 +161,9 @@ GOOGLE_CLIENT_SECRET=xxxx
 
 > Replace this placeholder with your Week 5 schema image.
 
-```md
+<img width="1460" height="688" alt="image" src="https://github.com/user-attachments/assets/fa635e14-d6e9-40ba-998f-5b2b4d06b70e" />
 
-```
+
 
 # Authentication & Security (Week 6)
 
