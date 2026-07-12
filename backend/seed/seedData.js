@@ -76,9 +76,9 @@ const importData = async () => {
 
     await Booking.deleteMany();
     await Room.deleteMany();
-    await User.deleteMany({ email: { $in: ['admin@ecostay.com', 'guest@ecostay.com'] } });
+    await User.deleteMany({ email: { $in: ['admin@ecostay.com', 'guest@ecostay.com', 'owner@ecostay.com'] } });
 
-    await Room.insertMany(rooms);
+    const createdRooms = await Room.insertMany(rooms);
 
     await User.create({
       name: 'Trishul Admin',
@@ -94,9 +94,21 @@ const importData = async () => {
       role: 'guest',
     });
 
+    // Demo homestay owner, with one of the seeded rooms assigned to them so
+    // the Owner dashboard has data to show right away.
+    const owner = await User.create({
+      name: 'Demo Homestay Owner',
+      email: 'owner@ecostay.com',
+      password: 'Owner@123',
+      role: 'owner',
+    });
+    createdRooms[0].owner = owner._id;
+    await createdRooms[0].save();
+
     console.log('Seed data imported successfully!');
     console.log('Admin login  -> admin@ecostay.com / Admin@123');
     console.log('Guest login  -> guest@ecostay.com / Guest@123');
+    console.log('Owner login  -> owner@ecostay.com / Owner@123');
     process.exit();
   } catch (error) {
     console.error(`Seed error: ${error.message}`);
@@ -109,7 +121,7 @@ const destroyData = async () => {
     await mongoose.connect(MONGO_URI);
     await Booking.deleteMany();
     await Room.deleteMany();
-    await User.deleteMany({ email: { $in: ['admin@ecostay.com', 'guest@ecostay.com'] } });
+    await User.deleteMany({ email: { $in: ['admin@ecostay.com', 'guest@ecostay.com', 'owner@ecostay.com'] } });
     console.log('Data destroyed successfully!');
     process.exit();
   } catch (error) {
