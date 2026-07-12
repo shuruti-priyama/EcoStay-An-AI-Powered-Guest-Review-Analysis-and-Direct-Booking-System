@@ -34,6 +34,15 @@ export const AuthProvider = ({ children }) => {
     return persistSession(res.data.data);
   }, []);
 
+  const loginWithToken = useCallback(async (token) => {
+    localStorage.setItem('ecostay_token', token);
+    const res = await api.get('/auth/me');
+    const userData = res.data.data;
+    localStorage.setItem('ecostay_user', JSON.stringify(userData));
+    setUser(userData);
+    return userData;
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem('ecostay_token');
     localStorage.removeItem('ecostay_user');
@@ -44,9 +53,11 @@ export const AuthProvider = ({ children }) => {
     user,
     isAuthenticated: !!user,
     isAdmin: user?.role === 'admin',
+    isOwner: user?.role === 'owner',
     loading,
     login,
     register,
+    loginWithToken,
     logout,
   };
 
