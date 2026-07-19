@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CalendarDays, Users, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CalendarDays, Users, X, Star } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Loader from '../components/Loader';
 import StatusBadge from '../components/StatusBadge';
@@ -10,6 +10,7 @@ const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cancellingId, setCancellingId] = useState(null);
+  const navigate = useNavigate();
 
   const fetchBookings = async () => {
     setLoading(true);
@@ -77,6 +78,12 @@ const BookingHistory = () => {
                   {b.adminNote && (
                     <p className="mt-2 rounded-lg bg-forest-50 dark:bg-forest-900 p-2 font-body text-xs text-forest-700 dark:text-sand-200">Note from host: {b.adminNote}</p>
                   )}
+                  {b.ownerReply && (
+                    <div className="mt-4 rounded-xl border border-forest-100 dark:border-forest-700 bg-forest-50/50 dark:bg-forest-900/30 p-3">
+                      <p className="font-body text-xs font-semibold text-forest-700 dark:text-forest-400 mb-1 uppercase tracking-wider">Response from Host</p>
+                      <p className="font-body text-sm text-ink/80 dark:text-sand-100/80 italic">"{b.ownerReply}"</p>
+                    </div>
+                  )}
                 </div>
                 {['pending', 'approved'].includes(b.status) && (
                   <button
@@ -86,6 +93,19 @@ const BookingHistory = () => {
                   >
                     <X size={14} /> {cancellingId === b._id ? 'Cancelling...' : 'Cancel'}
                   </button>
+                )}
+                {b.status === 'completed' && !b.review && (
+                  <button
+                    onClick={() => navigate(`/review/${b._id}`)}
+                    className="flex items-center gap-1 self-start rounded-full border border-amber-300 dark:border-amber-500/40 px-4 py-2 font-body text-sm font-medium text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-500/10 sm:self-center"
+                  >
+                    <Star size={14} /> Write a Review
+                  </button>
+                )}
+                {b.status === 'completed' && b.review && (
+                  <span className="flex items-center gap-1 self-start rounded-full bg-forest-50 dark:bg-forest-900 px-4 py-2 font-body text-sm font-medium text-forest-600 dark:text-forest-300 sm:self-center">
+                    <Star size={14} fill="currentColor" /> Reviewed
+                  </span>
                 )}
               </div>
             ))}
