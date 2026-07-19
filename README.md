@@ -386,12 +386,6 @@ Alongside the AI feature, room photo uploads were upgraded from plain URL text i
 
 ---
 
-## Screenshots
-<img width="1918" height="1198" alt="Screenshot 2026-07-19 170605" src="https://github.com/user-attachments/assets/d58635a2-fc01-4831-ad7c-8d6b77e59d67" />
-<img width="1918" height="1198" alt="Screenshot 2026-07-19 170659" src="https://github.com/user-attachments/assets/5e916ab2-608e-48cd-830c-804cc2773212" />
-
----
-
 ## Design Notes
 
 - Responsive UI
