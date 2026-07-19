@@ -13,4 +13,15 @@ const authLimiter = rateLimit({
   skipSuccessfulRequests: true,
 });
 
-module.exports = { authLimiter };
+const aiAnalysisLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'AI analysis limit reached for this hour. Please try again later.',
+  },
+});
+
+module.exports = { authLimiter, aiAnalysisLimiter };
