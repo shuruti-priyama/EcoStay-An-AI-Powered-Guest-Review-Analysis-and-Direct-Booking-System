@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, X } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Plus, Pencil, Trash2, X, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Loader from '../../components/Loader';
 import api from '../../api/axios';
 
 const emptyForm = {
   name: '', description: '', type: 'Cottage', pricePerNight: '', maxGuests: 2,
-  totalRooms: 1, images: '', amenities: '', isActive: true,
+  totalRooms: 1, images: [], amenities: [], isActive: true,
 };
 
 const ROOM_TYPES = ['Cottage', 'Treehouse', 'Mud House', 'Bamboo Villa', 'Riverside Cabin', 'Farmstay Room'];
+
+const AMENITY_SUGGESTIONS = [
+  'WiFi', 'Breakfast Included', 'Free Parking', 'Bonfire',
+  'Swimming Pool', 'Garden', 'Mountain View', 'Lake View',
+  'Air Conditioning', 'TV', 'Pet Friendly', 'Airport Pickup',
+  'Laundry', 'Tea/Coffee Maker', 'Hot Water', 'Security',
+  'Bicycle Rental', 'Spa/Sauna', 'Home-cooked Meals', 'Power Backup',
+];
 
 const ManageRooms = ({ ownerMode = false }) => {
   const [rooms, setRooms] = useState([]);
@@ -18,6 +26,9 @@ const ManageRooms = ({ ownerMode = false }) => {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [customAmenity, setCustomAmenity] = useState('');
+  const fileInputRef = useRef(null);
 
   const fetchRooms = async () => {
     setLoading(true);
@@ -37,6 +48,7 @@ const ManageRooms = ({ ownerMode = false }) => {
   const openCreateModal = () => {
     setEditingId(null);
     setForm(emptyForm);
+    setCustomAmenity('');
     setModalOpen(true);
   };
 
@@ -49,10 +61,11 @@ const ManageRooms = ({ ownerMode = false }) => {
       pricePerNight: room.pricePerNight,
       maxGuests: room.maxGuests,
       totalRooms: room.totalRooms,
-      images: (room.images || []).join(', '),
-      amenities: (room.amenities || []).join(', '),
+      images: room.images || [],
+      amenities: room.amenities || [],
       isActive: room.isActive,
     });
+    setCustomAmenity('');
     setModalOpen(true);
   };
 
@@ -61,8 +74,67 @@ const ManageRooms = ({ ownerMode = false }) => {
     setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
   };
 
+ 
+  const handleFilesSelected = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setUploadingImage(true);
+    try {
+      const uploadedUrls = [];
+      for (const file of files) {
+        const data = new FormData();
+        data.append('image', file);
+        const res = await api.post('/rooms/upload-image', data, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        uploadedUrls.push(res.data.data.url);
+      }
+      setForm((prev) => ({ ...prev, images: [...prev.images, ...uploadedUrls] }));
+      toast.success(`${uploadedUrls.length} image${uploadedUrls.length > 1 ? 's' : ''} uploaded`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Image upload failed');
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) fileInputRef.current.value = ''; // allow re-selecting the same file
+    }
+  };
+
+  const removeImage = (url) => {
+    setForm((prev) => ({ ...prev, images: prev.images.filter((img) => img !== url) }));
+  };
+
+  const toggleAmenity = (amenity) => {
+    setForm((prev) => {
+      const has = prev.amenities.includes(amenity);
+      return {
+        ...prev,
+        amenities: has ? prev.amenities.filter((a) => a !== amenity) : [...prev.amenities, amenity],
+      };
+    });
+  };
+
+  const addCustomAmenity = () => {
+    const trimmed = customAmenity.trim();
+    if (!trimmed) return;
+    if (form.amenities.includes(trimmed)) {
+      toast.error('Already added');
+      return;
+    }
+    setForm((prev) => ({ ...prev, amenities: [...prev.amenities, trimmed] }));
+    setCustomAmenity('');
+  };
+
+  const removeAmenity = (amenity) => {
+    setForm((prev) => ({ ...prev, amenities: prev.amenities.filter((a) => a !== amenity) }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (form.images.length === 0) {
+      toast.error('Add at least one photo before saving');
+      return;
+    }
     setSaving(true);
     try {
       const payload = {
@@ -70,8 +142,6 @@ const ManageRooms = ({ ownerMode = false }) => {
         pricePerNight: Number(form.pricePerNight),
         maxGuests: Number(form.maxGuests),
         totalRooms: Number(form.totalRooms),
-        images: form.images.split(',').map((s) => s.trim()).filter(Boolean),
-        amenities: form.amenities.split(',').map((s) => s.trim()).filter(Boolean),
       };
 
       if (editingId) {
@@ -170,15 +240,119 @@ const ManageRooms = ({ ownerMode = false }) => {
                 <input name="totalRooms" type="number" min="0" required placeholder="Total units" value={form.totalRooms} onChange={handleChange} className="input-field" />
               </div>
 
-              <input name="images" placeholder="Image URLs, comma-separated" value={form.images} onChange={handleChange} className="input-field" />
-              <input name="amenities" placeholder="Amenities, comma-separated" value={form.amenities} onChange={handleChange} className="input-field" />
+              {/* Photos */}
+              <div>
+                <label className="mb-1.5 block font-body text-sm font-medium text-ink/80 dark:text-sand-100/80">
+                  Photos
+                </label>
+
+                {form.images.length > 0 && (
+                  <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
+                    {form.images.map((url) => (
+                      <div key={url} className="group relative aspect-square overflow-hidden rounded-lg border border-forest-100 dark:border-forest-700">
+                        <img src={url} alt="Room" className="h-full w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(url)}
+                          className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  multiple
+                  onChange={handleFilesSelected}
+                  className="hidden"
+                  id="room-image-input"
+                />
+                <label
+                  htmlFor="room-image-input"
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-forest-200 dark:border-forest-700 px-4 py-3 font-body text-sm text-forest-700 dark:text-sand-200 hover:bg-forest-50 dark:hover:bg-forest-900 transition-colors"
+                >
+                  {uploadingImage ? (
+                    <><Loader2 size={16} className="animate-spin" /> Uploading...</>
+                  ) : (
+                    <><Upload size={16} /> Upload photos from your device</>
+                  )}
+                </label>
+                <p className="mt-1.5 flex items-center gap-1 font-body text-xs text-ink/40 dark:text-sand-100/40">
+                  <ImageIcon size={12} /> JPG, PNG, WEBP or GIF, up to 5MB each
+                </p>
+              </div>
+
+              {/* Amenities */}
+              <div>
+                <label className="mb-1.5 block font-body text-sm font-medium text-ink/80 dark:text-sand-100/80">
+                  Amenities
+                </label>
+
+                {form.amenities.length > 0 && (
+                  <div className="mb-2 flex flex-wrap gap-2">
+                    {form.amenities.map((a) => (
+                      <span
+                        key={a}
+                        className="flex items-center gap-1.5 rounded-full bg-forest-100 dark:bg-forest-800 px-3 py-1 font-body text-xs font-medium text-forest-800 dark:text-sand-100"
+                      >
+                        {a}
+                        <button type="button" onClick={() => removeAmenity(a)} className="text-forest-500 hover:text-red-500">
+                          <X size={12} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <p className="mb-1.5 font-body text-xs text-ink/50 dark:text-sand-100/50">Tap to add a suggestion:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {AMENITY_SUGGESTIONS.map((s) => {
+                    const active = form.amenities.includes(s);
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => toggleAmenity(s)}
+                        className={`rounded-full border px-2.5 py-1 font-body text-xs transition-colors ${
+                          active
+                            ? 'border-forest-700 bg-forest-700 text-sand-50'
+                            : 'border-forest-100 dark:border-forest-700 text-ink/70 dark:text-sand-100/70 hover:bg-forest-50 dark:hover:bg-forest-900'
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-2 flex gap-2">
+                  <input
+                    type="text"
+                    value={customAmenity}
+                    onChange={(e) => setCustomAmenity(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') { e.preventDefault(); addCustomAmenity(); }
+                    }}
+                    placeholder="Or type a custom amenity..."
+                    className="input-field flex-1"
+                  />
+                  <button type="button" onClick={addCustomAmenity} className="btn-secondary !px-4 text-sm">
+                    Add
+                  </button>
+                </div>
+              </div>
 
               <label className="flex items-center gap-2 font-body text-sm text-ink/70 dark:text-sand-100/70">
                 <input type="checkbox" name="isActive" checked={form.isActive} onChange={handleChange} className="h-4 w-4 rounded border-forest-300 dark:border-forest-700" />
                 Room is active and bookable
               </label>
 
-              <button type="submit" disabled={saving} className="btn-primary w-full">
+              <button type="submit" disabled={saving || uploadingImage} className="btn-primary w-full">
                 {saving ? 'Saving...' : editingId ? 'Update Room' : 'Create Room'}
               </button>
             </form>

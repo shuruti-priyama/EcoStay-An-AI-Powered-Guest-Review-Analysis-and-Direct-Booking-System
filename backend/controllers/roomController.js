@@ -138,4 +138,16 @@ const deleteRoom = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Room deleted successfully' });
 });
 
-module.exports = { getRooms, getRoomById, createRoom, updateRoom, deleteRoom, getMyRooms };
+
+const uploadRoomImageHandler = asyncHandler(async (req, res) => {
+  if (!req.file) {
+    res.status(400);
+    throw new Error('No image file was uploaded');
+  }
+
+  // Served statically by server.js via app.use('/uploads', express.static(...))
+  const url = `/uploads/rooms/${req.file.filename}`;
+  res.status(201).json({ success: true, data: { url } });
+});
+
+module.exports = { getRooms, getRoomById, createRoom, updateRoom, deleteRoom, getMyRooms, uploadRoomImageHandler };

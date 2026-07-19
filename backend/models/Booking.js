@@ -54,6 +54,34 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    // Guest review (submitted after checkout)
+    review: {
+      type: String,
+      default: '',
+      maxlength: 2000,
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5,
+      default: null,
+    },
+    // AI analysis result from Gemini
+    aiAnalysis: {
+      sentiment: { type: String, default: '' },
+      summary: { type: String, default: '' },
+      themes: { type: [String], default: [] },
+      positives: { type: [String], default: [] },
+      negatives: { type: [String], default: [] },
+      suggestedResponse: { type: String, default: '' },
+      analyzedAt: { type: Date, default: null },
+    },
+    // Owner's reply to the guest's review
+    ownerReply: {
+      type: String,
+      default: '',
+      maxlength: 2000,
+    },
   },
   { timestamps: true }
 );
