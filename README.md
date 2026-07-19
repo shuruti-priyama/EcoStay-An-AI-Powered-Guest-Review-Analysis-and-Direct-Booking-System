@@ -313,8 +313,7 @@ Homestay owners receive reviews scattered across multiple external platforms (Ai
    - Extract recurring themes (cleanliness, food, location, service, etc.).
    - List specific positives and negatives.
    - Generate a suggested public reply the owner can post back on the OTA site.
-5. Gemini returns a strict JSON array, validated by the backend before being sent to the frontend.
-6. The dashboard renders each review as a card, plus an aggregate summary (total reviews found, sentiment breakdown, most-mentioned themes across the batch).
+5. The dashboard renders each review as a card, plus an aggregate summary (total reviews found, sentiment breakdown, most-mentioned themes across the batch).
 
 ### Key Files
 
