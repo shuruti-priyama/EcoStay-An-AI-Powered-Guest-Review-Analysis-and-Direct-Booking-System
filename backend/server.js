@@ -13,15 +13,14 @@ const authRoutes = require('./routes/authRoutes');
 const roomRoutes = require('./routes/roomRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
-// Connect to MongoDB
 if (process.env.NODE_ENV !== 'test') {
   connectDB();
 }
 
 const app = express();
 
-// Core middleware
 app.use(helmet());
 app.use(
   cors({
@@ -34,6 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize()); 
 
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -42,11 +44,11 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'EcoStay API is running', timestamp: new Date().toISOString() });
 });
 
-// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
