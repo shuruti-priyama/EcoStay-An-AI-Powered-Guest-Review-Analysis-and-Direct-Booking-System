@@ -207,8 +207,7 @@ MongoDB Atlas enables EcoStay to:
 ---
 
 ## Database Schema
-
-
+<img width="1326" height="647" alt="image" src="https://github.com/user-attachments/assets/59b60de2-04a2-4802-95a5-b2fedc807778" />
 
 ---
 
