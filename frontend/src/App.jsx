@@ -12,6 +12,7 @@ import OAuthCallback from './pages/OAuthCallback';
 import Rooms from './pages/Rooms';
 import RoomDetails from './pages/RoomDetails';
 import BookingHistory from './pages/BookingHistory';
+import ReviewForm from './pages/ReviewForm';
 import NotFound from './pages/NotFound';
 
 import AdminLayout from './pages/admin/AdminLayout';
@@ -23,6 +24,8 @@ import OwnerLayout from './pages/owner/OwnerLayout';
 import OwnerDashboard from './pages/owner/OwnerDashboard';
 import OwnerRooms from './pages/owner/OwnerRooms';
 import OwnerBookings from './pages/owner/OwnerBookings';
+import OwnerReviews from './pages/owner/OwnerReviews';
+import OwnerOtaReviews from './pages/owner/OwnerOtaReviews';
 
 function App() {
   return (
@@ -43,6 +46,15 @@ function App() {
             element={
               <ProtectedRoute role="guest">
                 <BookingHistory />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/review/:bookingId"
+            element={
+              <ProtectedRoute role="guest">
+                <ReviewForm />
               </ProtectedRoute>
             }
           />
@@ -71,6 +83,8 @@ function App() {
             <Route index element={<OwnerDashboard />} />
             <Route path="rooms" element={<OwnerRooms />} />
             <Route path="bookings" element={<OwnerBookings />} />
+            <Route path="reviews" element={<OwnerReviews />} />
+            <Route path="ota-reviews" element={<OwnerOtaReviews />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

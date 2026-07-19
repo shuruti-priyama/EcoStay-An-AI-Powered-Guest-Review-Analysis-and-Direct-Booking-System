@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, BedDouble, ClipboardList } from 'lucide-react';
+import { LayoutDashboard, BedDouble, ClipboardList, Star, Globe } from 'lucide-react';
 
 const tabClass = ({ isActive }) =>
   `flex items-center gap-2 rounded-xl px-4 py-2.5 font-body text-sm font-medium transition-colors ${
@@ -24,6 +24,12 @@ const OwnerLayout = () => {
         </NavLink>
         <NavLink to="/owner/bookings" className={tabClass}>
           <ClipboardList size={16} /> Bookings
+        </NavLink>
+        <NavLink to="/owner/reviews" className={tabClass}>
+          <Star size={16} /> Reviews
+        </NavLink>
+        <NavLink to="/owner/ota-reviews" className={tabClass}>
+          <Globe size={16} /> OTA Reviews
         </NavLink>
       </div>
 
