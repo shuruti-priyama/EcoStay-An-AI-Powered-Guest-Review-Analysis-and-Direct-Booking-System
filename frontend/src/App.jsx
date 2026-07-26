@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -32,6 +33,7 @@ function App() {
     <div className="flex min-h-screen flex-col bg-sand-50 text-ink transition-colors dark:bg-forest-950 dark:text-sand-100">
       <Navbar />
       <main className="flex-1">
+        <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -89,6 +91,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>
