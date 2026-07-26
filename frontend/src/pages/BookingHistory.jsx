@@ -29,6 +29,7 @@ const BookingHistory = () => {
   }, []);
 
   const handleCancel = async (id) => {
+    if (!window.confirm('Cancel this booking? This cannot be undone.')) return;
     setCancellingId(id);
     try {
       await api.put(`/bookings/${id}/cancel`);
