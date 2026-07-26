@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, Users, Search } from 'lucide-react';
+import { CalendarDays, Users, Search, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const CheckAvailabilityBar = ({ className = '' }) => {
@@ -66,17 +66,20 @@ const CheckAvailabilityBar = ({ className = '' }) => {
         <Users size={18} className="shrink-0 text-clay-300" />
         <span className="flex w-full flex-col">
           <span className="text-[11px] uppercase tracking-wide text-sand-200/70">Guests</span>
-          <select
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-            className="w-full appearance-none bg-transparent font-body text-sm font-medium text-sand-50 outline-none [color-scheme:dark]"
-          >
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <option key={n} value={n} className="text-ink dark:text-sand-100">
-                {n} {n === 1 ? 'Guest' : 'Guests'}
-              </option>
-            ))}
-          </select>
+          <span className="relative flex w-full items-center">
+            <select
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              className="w-full cursor-pointer appearance-none bg-transparent pr-5 font-body text-sm font-medium text-sand-50 outline-none [color-scheme:dark]"
+            >
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <option key={n} value={n} className="text-ink dark:text-sand-100">
+                  {n} {n === 1 ? 'Guest' : 'Guests'}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="pointer-events-none absolute right-0 text-clay-300" />
+          </span>
         </span>
       </label>
 
