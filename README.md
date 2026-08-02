@@ -79,6 +79,7 @@ EcoStay is a full-stack MERN application for homestay management. Guests can reg
 | Database       | MongoDB Atlas, Mongoose                  |
 | Authentication | JWT, Passport Google OAuth               |
 | AI / LLM       | Google Gemini API (`gemini-flash-latest`)|
+| Image storage | Cloudinary | Cloudinary (free tier)       |
 
 ---
 
@@ -405,10 +406,28 @@ Alongside the AI feature, room photo uploads were upgraded from plain URL text i
 - Prompt engineering log documented in [`PROMPTS.md`](./PROMPTS.md)
 
 
-## Future Scope (upcoming weeks)
+## Deployment Documentation
 
-- Deployment
+### Live URLs
 
----
+- **Frontend (Vercel):** https://ecostay-sip.vercel.app/ 
+- **Backend (Render):** https://ecostay-mern-project.onrender.com
+- **Backend health check:** https://ecostay-mern-project.onrender.com/api/health
+
+### Environment Variables in Production
+
+**Backend (Render):**
+`MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`, `GEMINI_API_KEY`, `CLIENT_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `NODE_ENV=production`
+
+**Frontend (Vercel):**
+`VITE_API_URL` — points to the deployed backend URL above, used by the frontend's axios client and Google OAuth redirect so the app works correctly across separate domains.
+
+### Known Limitations on Free Tier
+
+- **Cold starts:** Render's free tier spins the backend down after ~15 minutes of inactivity. The first request after idle time can take 30–60 seconds to respond while the service wakes up — this is expected, not a bug.
+- **No persistent local disk:** Render's free-tier filesystem is ephemeral, so any files saved directly to local disk are wiped on every redeploy or restart. Room image uploads were moved from local disk (Multer `diskStorage`) to **Cloudinary** for this reason — uploads now persist permanently regardless of backend restarts.
+- **Single-origin CORS:** The backend's CORS config accepts one `CLIENT_URL` origin at a time (set via env var). Local development (`localhost:5173`) and the deployed Vercel URL are both registered as separate authorized origins in the Google OAuth client, but the backend itself only trusts one `CLIENT_URL` value at a time — update this env var if the frontend's deployed URL changes.
+- **Cross-origin resource loading:** Since frontend and backend are hosted on different domains (Vercel and Render), Helmet's default `Cross-Origin-Resource-Policy: same-origin` header had to be relaxed to `cross-origin` so that images served from the backend can load inside the frontend.
+- **SPA routing on Vercel:** Client-side routes (e.g. `/oauth-callback`) require a rewrite rule (`vercel.json`) so Vercel serves `index.html` for any unmatched path instead of returning its own 404 — necessary for React Router to handle routing correctly on a static host.
 
 Made for the TBI SIP AI-Assisted Full Stack Web Development Internship, GEU.
