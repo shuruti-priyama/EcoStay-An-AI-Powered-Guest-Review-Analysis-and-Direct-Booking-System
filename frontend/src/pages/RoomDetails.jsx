@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Loader from '../components/Loader';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -92,7 +93,7 @@ const RoomDetails = () => {
     );
   }
 
-  const images = room.images?.length ? room.images : ['https://images.unsplash.com/photo-1518733057094-95b53143d2a7?w=1200'];
+  const images = (room.images?.length ? room.images : ['https://images.unsplash.com/photo-1518733057094-95b53143d2a7?w=1200']).map(resolveImageUrl);
 
   return (
     <div className="bg-sand-50 dark:bg-forest-950 py-10">

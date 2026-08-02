@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Leaf, ArrowUpRight } from 'lucide-react';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const RoomCard = ({ room }) => {
   const placeholderImg = 'https://images.unsplash.com/photo-1518733057094-95b53143d2a7?w=800';
@@ -10,7 +11,7 @@ const RoomCard = ({ room }) => {
     <div className="card group flex flex-col overflow-hidden transition-transform hover:-translate-y-1">
       <div className="relative h-56 w-full overflow-hidden">
         <img
-          src={room.images?.[0] || placeholderImg}
+          src={room.images?.[0] ? resolveImageUrl(room.images[0]) : placeholderImg}
           alt={room.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

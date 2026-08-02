@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, X, Upload, Image as ImageIcon, Loader2 } from 'lu
 import toast from 'react-hot-toast';
 import Loader from '../../components/Loader';
 import api from '../../api/axios';
+import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 const emptyForm = {
   name: '', description: '', type: 'Cottage', pricePerNight: '', maxGuests: 2,
@@ -250,7 +251,7 @@ const ManageRooms = ({ ownerMode = false }) => {
                   <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
                     {form.images.map((url) => (
                       <div key={url} className="group relative aspect-square overflow-hidden rounded-lg border border-forest-100 dark:border-forest-700">
-                        <img src={url} alt="Room" className="h-full w-full object-cover" />
+                        <img src={resolveImageUrl(url)} alt="Room" className="h-full w-full object-cover" />
                         <button
                           type="button"
                           onClick={() => removeImage(url)}
