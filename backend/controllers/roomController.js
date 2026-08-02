@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Room = require('../models/Room');
 const Booking = require('../models/Booking');
+const cloudinary = require('../config/cloudinary');
 
 const getBookedCount = async (roomId, checkIn, checkOut) => {
   const overlapping = await Booking.countDocuments({
@@ -145,8 +146,18 @@ const uploadRoomImageHandler = asyncHandler(async (req, res) => {
     throw new Error('No image file was uploaded');
   }
 
-  // Served statically by server.js via app.use('/uploads', express.static(...))
-  const url = `/uploads/rooms/${req.file.filename}`;
+
+  const url = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'ecostay/rooms' },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result.secure_url);
+      }
+    );
+    stream.end(req.file.buffer);
+  });
+
   res.status(201).json({ success: true, data: { url } });
 });
 
