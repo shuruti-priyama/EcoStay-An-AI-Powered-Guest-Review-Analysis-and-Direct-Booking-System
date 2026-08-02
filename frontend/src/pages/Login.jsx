@@ -16,7 +16,8 @@ const Login = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleGoogleLogin = () => {
-    window.location.href = '/api/auth/google';
+    const base = import.meta.env.VITE_API_URL || '';
+    window.location.href = `${base}/api/auth/google`;
   };
 
   const handleSubmit = async (e) => {

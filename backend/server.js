@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(
   cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
