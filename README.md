@@ -410,7 +410,7 @@ Alongside the AI feature, room photo uploads were upgraded from plain URL text i
 
 ### Live URLs
 
-- **Frontend (Vercel):** https://ecostay-sip.vercel.app/ 
+- **Frontend (Vercel):** https://ecostay-sip.vercel.app
 - **Backend (Render):** https://ecostay-mern-project.onrender.com
 - **Backend health check:** https://ecostay-mern-project.onrender.com/api/health
 
