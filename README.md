@@ -1,433 +1,175 @@
-# EcoStay — An AI-Powered Guest Review Analysis and Direct Booking System
+# EcoStay — AI-Powered Guest Review Analysis & Direct Homestay Booking System
 
-## Overview
-
-EcoStay is a full-stack MERN application for homestay management. Guests can register, login using JWT or Google OAuth, browse rooms, check availability, book stays, and manage bookings. Homestay owner manage rooms, bookings, users, and analytics. Homestay owners now also get an AI-powered tool to analyze reviews copied from external booking platforms.
+A full-stack MERN homestay booking platform. Guests book eco-friendly stays directly (no OTA commission); homestay owners get an AI assistant (Google Gemini) that analyzes guest reviews — both on-platform and pasted in bulk from Airbnb, Booking.com, or MakeMyTrip — for sentiment, recurring themes, and ready-to-post replies.
 
 ---
 
-## Table of Contents
+## 🔗 Live Demo
 
-1. Features
-2. Tech Stack
-3. Architecture
-4. Project Structure
-5. Prerequisites
-6. Installation
-7. MongoDB Atlas Setup
-8. Environment Variables
-9. Database Schema
-10. Authentication & Security 
-11. AI-Powered Review Analysis 
-12. Core Features
-13. API Reference
-15. Design Notes
-16. Future Scope
+- **App:** [https://ecostay-sip.vercel.app](https://ecostay-sip.vercel.app)
+- **Backend health check:** [https://ecostay-mern-project.onrender.com/api/health](https://ecostay-mern-project.onrender.com/api/health)
+
+> First load after inactivity may take 30–60s — see [Known Limitations]
 
 ---
 
-## Features
+## 📸 Screenshots
 
-### Guest
 
-- Register
-- Login
-- Logout
-- Google OAuth
-- Browse Rooms
-- Room Details
-- Search Availability
-- Booking
-- Booking History
-- Cancel Booking
-
-### Owner
-
-- Dashboard
-- Manage Rooms (CRUD)
-- Manage Bookings
-- Analytics
-
-### AI Features(For homestay owners) (Week 7)
-
-- OTA Review Analysis Dashboard — paste bulk reviews copied from Airbnb, Booking.com, MakeMyTrip, etc.
-- AI-powered sentiment classification (Positive / Neutral / Negative)
-- Automatic theme extraction (cleanliness, food, location, service, and more)
-- Positives and negatives breakdown per review
-- AI-generated suggested response owners can copy and post back on the OTA site
-- Aggregate dashboard stats: total reviews analyzed, sentiment breakdown, most-mentioned themes
-
-### Security
-
-- JWT Authentication
-- Google OAuth
-- Protected Routes
-- Protected APIs
-- bcrypt Password Hashing
-- Input Validation
-- Rate Limiting
-- Centralized Error Handling
 
 ---
 
-## Tech Stack
+## ✨ Features
 
-| Layer          | Technology                              |
-| -------------- | ---------------------------------------- |
-| Frontend       | React, Vite, Tailwind CSS                |
-| Backend        | Node.js, Express.js                      |
-| Database       | MongoDB Atlas, Mongoose                  |
-| Authentication | JWT, Passport Google OAuth               |
-| AI / LLM       | Google Gemini API (`gemini-flash-latest`)|
-| Image storage | Cloudinary | Cloudinary (free tier)       |
+**Guest** — Register/Login (JWT + Google OAuth) · Browse & search rooms · Book directly · Booking history & cancellation · Leave a review after stay
 
----
+**Homestay Owner** — Dashboard with analytics · Manage own rooms (CRUD) & photos · Manage own bookings · **AI review analysis** on guest reviews (sentiment, themes, suggested reply) · **OTA Review Analysis Dashboard** — paste bulk reviews from Airbnb/Booking.com/MakeMyTrip, Gemini separates and analyzes each one independently
 
-## Architecture
+**Security** — JWT + Google OAuth · Protected routes & APIs · bcrypt hashing · Input validation · Rate limiting (auth + AI endpoints) · Centralized error handling
 
-```
-React Frontend
-      |
-Axios + JWT
-      |
-Express Backend
-      |
-Authentication Middleware
-      |
-   MongoDB Atlas   <----->   Gemini API (AI Review Analysis)
-```
+> Full breakdown of both AI review flows (on-platform + OTA), including endpoint-by-endpoint walkthroughs, is in [`PROMPTS.md`](./PROMPTS.md) and the [API Documentation](#-api-documentation) below.
 
 ---
 
-## Project Structure
+## 🛠 Tech Stack
 
-```
-ecostay/
-├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/          # Gemini AI integration (geminiReview.js)
-│   ├── validators/
-│   ├── uploads/         # Uploaded room images
-│   ├── tests/
-│   ├── seed/
-│   └── server.js
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   │   └── owner/       # Owner Dashboard, incl. OTA Review Analysis
-│   ├── context/
-│   └── api/
-├── PROMPTS.md            # Prompt engineering log (Week 7)
-└── README.md
-```
+| Layer          | Technology                                |
+| -------------- | ------------------------------------------ |
+| Frontend       | React, Vite, Tailwind CSS                  |
+| Backend        | Node.js, Express.js                        |
+| Database       | MongoDB Atlas, Mongoose                    |
+| Authentication | JWT, Passport.js (Google OAuth)            |
+| AI / LLM       | Google Gemini API (`gemini-flash-latest`)  |
+| Image Storage  | Cloudinary (free tier)                     |
+| Deployment     | Vercel (frontend), Render (backend)        |
 
-## Prerequisites
+*MongoDB Atlas: cloud-hosted, secure, free tier, no local DB to manage. Cloudinary: Render's free tier has an ephemeral filesystem, so uploads live in Cloudinary instead of local disk to survive redeploys.*
 
-- Node.js 18+
-- MongoDB Atlas
-- Git
-- A Google Gemini API key (for AI review analysis)
+---
 
-## Installation
+## ⚙️ Setup Instructions
 
-### Clone
+**Prerequisites:** Node.js 18+, MongoDB Atlas account, Git, a free Gemini API key ([aistudio.google.com](https://aistudio.google.com/app/apikey)), a free Cloudinary account.
 
-```
+```bash
 git clone https://github.com/shuruti-priyama/EcoStay-An-AI-Powered-Guest-Review-Analysis-and-Direct-Booking-System
 cd ecostay
-```
 
-### Backend
-
-```
-cd backend
-npm install
-cp .env.example .env
-npm run seed
+# Backend
+cd backend && npm install
+cp .env.example .env   # fill in values below
+npm run seed             # optional demo accounts
 npm run dev
+
+# Frontend (new terminal)
+cd frontend && npm install && npm run dev
 ```
 
-### Frontend
-
+**Backend `.env`:**
 ```
-cd frontend
-npm install
-npm run dev
-```
-
-## MongoDB Atlas Setup
-
-1. Create a free cluster.
-2. Add IP Address.
-3. Create Database User.
-4. Copy connection string.
-5. Update `.env`.
-
-## Environment Variables
-
-```
-MONGO_URI=your_connection_string
+MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_secret
+JWT_EXPIRES_IN=7d
+CLIENT_URL=http://localhost:5173
 GOOGLE_CLIENT_ID=xxxx
 GOOGLE_CLIENT_SECRET=xxxx
 GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
 GEMINI_API_KEY=your_gemini_api_key
+CLOUDINARY_CLOUD_NAME=xxxx
+CLOUDINARY_API_KEY=xxxx
+CLOUDINARY_API_SECRET=xxxx
 ```
 
-> Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com). Never commit `.env` — only `.env.example` (with placeholder values) should be tracked in git.
+**Frontend `.env`** (only if pointing at a deployed backend): `VITE_API_URL=https://your-backend.onrender.com`
+
+**MongoDB Atlas:** create a free M0 cluster → Network Access → add your IP (or `0.0.0.0/0`) → Database Access → create a user → copy connection string into `MONGO_URI`.
+
+> Never commit `.env` — only `.env.example` is tracked in git.
 
 ---
 
-## Why MongoDB Atlas?
+## 📡 API Documentation
 
-This project uses **MongoDB Atlas** as the cloud-hosted database solution for storing user accounts, room details, booking records, and application analytics.
+Base URL: `http://localhost:5000/api` (local) · `https://ecostay-mern-project.onrender.com/api` (production)
 
-### Reasons for Choosing MongoDB Atlas
+| Method | Endpoint | Access | Description |
+| ------ | -------- | ------ | ------------ |
+| POST | `/auth/register` | Public | Register |
+| POST | `/auth/login` | Public | Login, returns JWT |
+| GET | `/auth/me` | Private | Current user |
+| GET | `/auth/google` → `/auth/google/callback` | Public | Google OAuth |
+| GET | `/rooms` · `/rooms/:id` | Public | List / view rooms |
+| POST/PUT/DELETE | `/rooms`, `/rooms/:id` | Owner/Admin | Manage rooms |
+| POST | `/rooms/upload-image` | Owner/Admin | Upload room photo (Cloudinary) |
+| POST | `/bookings` | Guest | Book a room |
+| GET | `/bookings/my` | Guest | My bookings |
+| PUT | `/bookings/:id/cancel` | Guest | Cancel booking |
+| GET | `/bookings` · PUT `/bookings/:id/status` | Admin | Manage all bookings |
+| POST | `/reviews/:bookingId` | Guest | Submit a review |
+| GET | `/reviews/my-rooms` · `/reviews/room/:roomId` | Owner | View reviews |
+| POST | `/reviews/:bookingId/analyze` | Owner | Gemini-analyze one review |
+| POST | `/reviews/:bookingId/reply` | Owner | Reply to a review |
+| **POST** | **`/reviews/ota/analyze`** | **Owner** | **Bulk-analyze pasted OTA reviews** |
+| GET | `/admin/analytics` | Admin | Platform analytics |
 
-- **Cloud-hosted database** – Eliminates the need to install and manage a local MongoDB server.
-- **Easy MERN integration** – Connects seamlessly with **Node.js**, **Express.js**, and **Mongoose**.
-- **Scalable architecture** – Supports application growth by allowing database resources to scale as needed.
-- **Secure by design** – Provides IP access control, database user authentication, and encrypted connections (TLS/SSL).
-- **Reliable and highly available** – Offers automated backups, monitoring, and managed infrastructure.
-- **Free development tier** – The free cluster is ideal for development, testing, and academic projects.
+**Example — `POST /reviews/ota/analyze`**
 
-### Benefits in EcoStay
+Request: `{ "rawText": "Priya S. - ★★★★★\nLoved our stay! Spotless rooms and stunning lakeside view." }`
 
-MongoDB Atlas enables EcoStay to:
-
-- Store and manage users, rooms, and booking information in a centralized cloud database.
-- Perform efficient CRUD operations through the Express.js backend using Mongoose.
-- Access the database securely from different development environments.
-- Provide a production-ready database foundation for future deployment and scaling.
-
----
-
-## Database Schema
-<img width="1326" height="647" alt="image" src="https://github.com/user-attachments/assets/59b60de2-04a2-4802-95a5-b2fedc807778" />
-
----
-
-## Authentication & Security 
-
-- Register working end-to-end
-- Login working end-to-end
-- Logout working
-- JWT Authentication
-- Google OAuth Login
-- Protected Backend APIs
-- Protected React Pages
-- Rate Limiting
-- Input Validation
-
-### Protected Pages
-
-- Profile
-- Booking History
-- Admin Dashboard
-
-Unauthenticated users are redirected to `/login`.
-
-### Backend Security
-
-- JWT middleware
-- Role middleware
-- 401 Unauthorized for missing tokens
-- Password hashing using bcrypt
-
-### Rate Limiting
-
-Applied on:
-
-- `/api/auth/login`
-- `/api/auth/register`
-- `/api/reviews/ota/analyze` (AI endpoint, capped separately to control Gemini API usage)
-
-### Validation
-
-- Email validation
-- Password validation
-- Required fields
-- Invalid requests rejected
+Response `200`:
+```json
+{
+  "success": true,
+  "count": 1,
+  "data": [{
+    "reviewerName": "Priya S.", "rating": 5, "sentiment": "Positive",
+    "themes": ["cleanliness", "location"],
+    "positives": ["Spotless rooms", "Stunning lakeside view"], "negatives": [],
+    "suggestedResponse": "Thank you so much, Priya! We're thrilled you loved the lakeside views."
+  }]
+}
+```
 
 ---
 
-## AI-Powered Review Analysis (Week 7)
+## 🏗 Architecture / Folder Structure
 
-### Two Review Analysis Flows
- 
-EcoStay has two distinct Gemini-powered review features, covering both reviews left directly on the platform and reviews scattered across external sites:
- 
-1. **On-Platform Guest Reviews** — a guest who completes a stay leaves a review, which the owner then analyzes with Gemini.
-2. **OTA Review Analysis Dashboard** — an owner pastes reviews copied from external sites (Airbnb, Booking.com, MakeMyTrip) for bulk AI analysis.
+```
+React Frontend → Axios+JWT → Express Backend → Auth Middleware → MongoDB Atlas
+                                     │                          ↕ Gemini API
+                                     └──────────→ Cloudinary (images)
+```
 
----
- 
-### 1. On-Platform Guest Reviews
- 
-#### Overview
- 
-Once a guest's booking is marked **completed**, they can leave a review and star rating directly on EcoStay. The owner can then run that review through Gemini for an instant sentiment breakdown, and reply — with Gemini able to draft the reply for them too.
- 
-#### How It Works
- 
-1. After checkout, the guest submits a review + star rating (1–5) for their booking via `POST /api/reviews/:bookingId`. The review is stored directly on that **Booking** document (`review`, `rating` fields).
-2. The owner opens the **Reviews** tab of their dashboard and sees all reviews across their rooms (`GET /api/reviews/my-rooms`), or reviews for one specific room (`GET /api/reviews/room/:roomId`).
-3. The owner clicks **Analyze** on a review, which calls `POST /api/reviews/:bookingId/analyze`. This sends the guest's review text to Gemini and stores the result back on the booking under `aiAnalysis`:
-   - `sentiment` — Positive / Neutral / Negative
-   - `summary` — one-line summary of the guest's experience
-   - `themes` — recurring topics (cleanliness, food, location, service, etc.)
-   - `positives` / `negatives` — specific points raised
-   - `suggestedResponse` — a Gemini-drafted reply the owner can use as-is or edit
-4. The owner posts their reply (using the suggested response or their own words) via `POST /api/reviews/:bookingId/reply`, stored in `ownerReply` on the booking.
-#### Key Files
- 
-| File | Purpose |
-| ---- | ------- |
-| `backend/models/Booking.js` | `review`, `rating`, `aiAnalysis`, `ownerReply` fields |
-| `backend/utils/geminiReview.js` | `analyzeReview()` — single-review Gemini analysis |
-| `backend/controllers/reviewController.js` | `submitReview`, `analyzeReviewForOwner`, `replyToReview`, `getRoomReviews`, `getOwnerAllReviews` |
-| `frontend/src/components/ReviewForm.jsx` | Guest-facing review submission form |
-| `frontend/src/pages/owner/OwnerReviews.jsx` | Owner-facing review + AI analysis + reply dashboard |
- 
----
- 
-### 2. OTA Review Analysis Dashboard
- 
-#### Overview
- 
-Homestay owners receive reviews scattered across multiple external platforms (Airbnb, Booking.com, MakeMyTrip) with no easy way to track sentiment or recurring feedback themes. The **OTA Review Analysis Dashboard** solves this: an owner pastes raw text copied from any of these sites — even multiple reviews mixed together — and the Gemini API separates each individual review and analyzes it.
- 
-### How It Works
- 
-1. Owner navigates to **Owner Dashboard → OTA Reviews**.
-2. Owner pastes one or more reviews copied from an external site into a text box.
-3. Frontend sends the raw text to `POST /api/reviews/ota/analyze`.
-4. Backend calls the Gemini API with a structured prompt instructing it to:
-   - Identify and separate each individual review from the pasted block.
-   - Extract the reviewer's name and star rating, if present.
-   - Classify sentiment (Positive / Neutral / Negative).
-   - Extract recurring themes (cleanliness, food, location, service, etc.).
-   - List specific positives and negatives.
-   - Generate a suggested public reply the owner can post back on the OTA site.
-5. The dashboard renders each review as a card, plus an aggregate summary (total reviews found, sentiment breakdown, most-mentioned themes across the batch).
+```
+ecostay/
+├── backend/    config/ controllers/ middleware/ models/ routes/
+│               utils/ (Gemini integration)  validators/  tests/  seed/  server.js
+├── frontend/   src/components/  src/pages/ (incl. owner/)  src/context/  src/api/
+├── PROMPTS.md  # Prompt engineering log
+└── README.md
+```
 
-### Key Files
-
-| File | Purpose |
-| ---- | ------- |
-| `backend/utils/geminiReview.js` | Gemini prompt construction and response parsing |
-| `backend/controllers/reviewController.js` | `analyzeOtaReviews` request handler |
-| `backend/routes/reviewRoutes.js` | `POST /api/reviews/ota/analyze` route |
-| `backend/validators/reviewValidators.js` | Input validation rules |
-| `backend/middleware/rateLimiter.js` | `aiAnalysisLimiter` — caps AI calls per hour |
-| `frontend/src/pages/owner/OwnerOtaReviews.jsx` | Owner-facing dashboard UI |
-
-
-### Additional Enhancement: Room Image Upload
-
-Alongside the AI feature, room photo uploads were upgraded from plain URL text input to real file uploads:
-
-- Owners can upload photos directly from their device (JPG/PNG/WEBP/GIF, up to 5MB each) via **Multer**.
-- Uploaded images are served statically from `backend/uploads/rooms/`.
-- The "Add Room" form also gained a one-click emoji amenity picker (WiFi, Breakfast, Parking, Bonfire, Mountain View, etc.) alongside free-text custom amenities.
+Frontend talks to the backend only through `src/api/axios.js` (attaches JWT, points at `VITE_API_URL` in prod). Backend keeps Gemini logic isolated in `utils/geminiReview.js`, separate from route/controller logic.
 
 ---
 
-## Core Features
+## ⚠️ Known Limitations
 
-### Guests
-
-- Register/Login
-- Google OAuth
-- Search Rooms
-- Book Rooms
-- Booking History
-- Cancel Booking
-
-### Homestay owner
-
-- CRUD Rooms
-- Booking Approval
-- Analytics Dashboard
-- Manage own rooms and photos
-- Manage own bookings
-- OTA Review Analysis powered by Gemini AI
+- **Cold starts:** Render free tier sleeps after ~15 min idle; first request after that takes 30–60s to wake up.
+- **Ephemeral disk:** Render's free-tier filesystem wipes on redeploy — images are stored on Cloudinary, not local disk, because of this.
+- **Single-origin CORS:** backend trusts one `CLIENT_URL` at a time — update it if the deployed frontend URL changes.
+- **Cross-origin images:** Helmet's `Cross-Origin-Resource-Policy` relaxed to `cross-origin` so backend-hosted images load on the Vercel frontend.
+- **SPA routing:** `vercel.json` rewrite rule needed so client-side routes (e.g. `/oauth-callback`) don't 404 on refresh.
+- **AI analysis is on-demand, not persisted** — OTA batch results aren't saved to the database yet.
+- **Not yet built:** owner notifications, multi-language support, payment gateway.
 
 ---
 
-## API Reference
+## 🙏 Credits & Acknowledgements
 
-| Method | Endpoint                     | Access  | Description                          |
-| ------ | ----------------------------- | ------- | ------------------------------------- |
-| POST   | /api/auth/register             | Public  | Register                              |
-| POST   | /api/auth/login                | Public  | Login                                 |
-| POST   | /api/auth/logout                | Private | Logout                                |
-| GET    | /api/auth/me                    | Private | Current User                          |
-| GET    | /api/auth/google                | Public  | Google OAuth                          |
-| GET    | /api/auth/google/callback        | Public  | OAuth Callback                        |
-| GET    | /api/rooms                      | Public  | Rooms                                 |
-| GET    | /api/rooms/:id                  | Public  | Room Details                          |
-| POST   | /api/rooms                      | Owner/Admin | Create Room                        |
-| PUT    | /api/rooms/:id                  | Owner/Admin | Update Room                        |
-| DELETE | /api/rooms/:id                  | Owner/Admin | Delete Room                        |
-| POST   | /api/rooms/upload-image          | Owner/Admin | Upload a room photo                |
-| POST   | /api/bookings                   | Guest   | Book                                   |
-| GET    | /api/bookings/my                 | Guest   | My Bookings                           |
-| PUT    | /api/bookings/:id/cancel          | Guest   | Cancel                                |
-| GET    | /api/bookings                   | Admin   | All Bookings                          |
-| PUT    | /api/bookings/:id/status          | Admin   | Update Status                         |
-| GET    | /api/admin/analytics              | Admin   | Analytics                             |
-| POST | /api/reviews/ota/analyze  | Owner | AI-powered bulk OTA review analysis |
+- **AI tools:** [Claude (Anthropic)](https://claude.com) — architecture, implementation, and debugging assistance throughout. [Google Gemini API](https://ai.google.dev) — powers the in-app review analysis feature.
+- **Resources referenced:** [React Docs](https://react.dev/learn) · [Express.js Guide](https://expressjs.com/en/starter/installing.html) · [Mongoose Docs](https://mongoosejs.com/docs/guide.html) · [MongoDB Atlas Docs](https://www.mongodb.com/docs/atlas/getting-started) · [Passport Google OAuth](https://www.passportjs.org/packages/passport-google-oauth20/) · [Vercel Docs](https://vercel.com/docs/deployments/overview) · [Render Docs](https://render.com/docs/deploy-node-express-app) · Web Dev Simplified, Traversy Media & freeCodeCamp tutorials on JWT auth, REST API design, and MERN deployment (full list in the internship curriculum).
 
 ---
-
-## Design Notes
-
-- Responsive UI
-- Tailwind CSS
-- Reusable Components
-- Forest green branding
-
----
-
-### Completed Deliverables(Week 7)
-
-- AI feature fully functional end-to-end on localhost (input → loading state → AI output)
-- Gemini API key stored only in `.env`, never committed
-- Loading state shown during the API call
-- Error handling shown to the user (validation errors and API failures both surface as toast notifications)
-- Rate limiting on the AI endpoint (20 requests/hour) to control API usage
-- Input validation (20–12,000 character range per batch)
-- Prompt engineering log documented in [`PROMPTS.md`](./PROMPTS.md)
-
-
-## Deployment Documentation
-
-### Live URLs
-
-- **Frontend (Vercel):** https://ecostay-sip.vercel.app
-- **Backend (Render):** https://ecostay-mern-project.onrender.com
-- **Backend health check:** https://ecostay-mern-project.onrender.com/api/health
-
-### Environment Variables in Production
-
-**Backend (Render):**
-`MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`, `GEMINI_API_KEY`, `CLIENT_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `NODE_ENV=production`
-
-**Frontend (Vercel):**
-`VITE_API_URL` — points to the deployed backend URL above, used by the frontend's axios client and Google OAuth redirect so the app works correctly across separate domains.
-
-### Known Limitations on Free Tier
-
-- **Cold starts:** Render's free tier spins the backend down after ~15 minutes of inactivity. The first request after idle time can take 30–60 seconds to respond while the service wakes up — this is expected, not a bug.
-- **No persistent local disk:** Render's free-tier filesystem is ephemeral, so any files saved directly to local disk are wiped on every redeploy or restart. Room image uploads were moved from local disk (Multer `diskStorage`) to **Cloudinary** for this reason — uploads now persist permanently regardless of backend restarts.
-- **Single-origin CORS:** The backend's CORS config accepts one `CLIENT_URL` origin at a time (set via env var). Local development (`localhost:5173`) and the deployed Vercel URL are both registered as separate authorized origins in the Google OAuth client, but the backend itself only trusts one `CLIENT_URL` value at a time — update this env var if the frontend's deployed URL changes.
-- **Cross-origin resource loading:** Since frontend and backend are hosted on different domains (Vercel and Render), Helmet's default `Cross-Origin-Resource-Policy: same-origin` header had to be relaxed to `cross-origin` so that images served from the backend can load inside the frontend.
-- **SPA routing on Vercel:** Client-side routes (e.g. `/oauth-callback`) require a rewrite rule (`vercel.json`) so Vercel serves `index.html` for any unmatched path instead of returning its own 404 — necessary for React Router to handle routing correctly on a static host.
 
 Made for the TBI SIP AI-Assisted Full Stack Web Development Internship, GEU.
