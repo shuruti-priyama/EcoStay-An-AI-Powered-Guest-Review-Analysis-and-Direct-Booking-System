@@ -15,7 +15,13 @@ A full-stack MERN homestay booking platform. Guests book eco-friendly stays dire
 
 ## 📸 Screenshots
 
+<img width="1600" height="960" alt="WhatsApp Image 2026-08-07 at 11 17 06 PM" src="https://github.com/user-attachments/assets/fb4015d3-fc9e-4d24-b53f-b0424f29c4ed" />
 
+<img width="1600" height="968" alt="WhatsApp Image 2026-08-07 at 11 18 55 PM" src="https://github.com/user-attachments/assets/38e799b9-aaad-47b5-bf6d-f0a1d9167212" />
+
+<img width="1600" height="959" alt="WhatsApp Image 2026-08-08 at 1 31 54 AM" src="https://github.com/user-attachments/assets/a3a0f2c4-831e-40a1-b321-0aaba99acc98" />
+
+<img width="1600" height="959" alt="WhatsApp Image 2026-08-08 at 1 32 44 AM" src="https://github.com/user-attachments/assets/1c1db785-ab7b-49c4-a990-349b5e09c346" />
 
 ---
 
